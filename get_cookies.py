@@ -15,7 +15,8 @@ def run(playwright: Playwright):
         json.dump(cookies, f, indent=2) # on ouvre fichier cookies.json qui est vide et on met dedans le contenu de cookies avec une certaine indentation
     print(f"{len(cookies)} cookies sauvegardés dans cookies.json") # regarde le dictionnaire et le nombre de cookies
     
-    get_statistics.statistics()
+    # get_cookies.py
+    get_statistics.stats(playwright)
     browser.close()
 
 with sync_playwright() as playwright: # démarre le moteur playwright en tant que playwright qui représente que playwright tourne

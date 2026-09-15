@@ -1,10 +1,10 @@
 [
   {
     "name": "__cflb",
-    "value": "0H28vpdyaGuxHr61Wa2QaxnDXBCcnFLV8g5t7ZhyXtP",
+    "value": "0H28vpdyaGuxHr61WZqsWVsr3hYj6YTQbNBdZuBDAps",
     "domain": "rocketleague.tracker.network",
     "path": "/",
-    "expires": 1789494997.963065,
+    "expires": 1789498646.972572,
     "httpOnly": true,
     "secure": false,
     "sameSite": "Lax"
