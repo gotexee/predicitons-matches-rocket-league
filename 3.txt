@@ -1,4 +1,4 @@
-ok on veut prédire proba de gagner la partie en 2V2 uniquement.
+ok on veut prédire proba de gagner la partie en 1V1 uniquement.
 
 1 - recevoir données de tous les joueurs
     - pour chaque joueur on récupère ses informations sur rltrackker
