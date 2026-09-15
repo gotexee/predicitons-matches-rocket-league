@@ -1,0 +1,22 @@
+ok on veut prédire proba de gagner la partie en 2V2 uniquement.
+
+1 - recevoir données de tous les joueurs
+    - pour chaque joueur on récupère ses informations sur rltrackker
+    - pas d'API officielle tracker.gg / Psyonix, confirmé
+    - décision : scraping maison (pas parse.bot, pas saisie manuelle)
+    - tracker.gg protégé Cloudflare + blocage anti-scraper explicite (menace légale si insistant)
+    - besoin en plus de requests : Playwright pour générer/rafraîchir le cookie cf_clearance
+    - contraintes : user-agent identique script/navigateur, charger la page HTML avant l'API, header Referer, délai entre requêtes, tourner depuis IP perso (pas cloud)
+    - détecter réponse bloquée (page challenge/block) vs vrai JSON
+    - référence : github.com/walkerpayne/Rocket-League-Match-Prediction (ballchasing + rltracker scraping + XGBoost/LogReg) - code de scraping obsolète (2021), structure à retenir
+
+2 - il faut tratier ces informations.
+    - le but est de créer des variables utiles
+
+3 - prédiction et entrainement
+    - entrainement = besoin d'un dataset historique labellisé (features avant-match + résultat réel)
+    - pas encore réglé : d'où vient ce dataset (log perso au fil des games vs bulk via ballchasing)
+
+4 - évalution et test
+
+5 - publication résultats prédiction et évaluation
