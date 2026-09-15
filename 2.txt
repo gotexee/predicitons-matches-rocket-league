@@ -53,7 +53,7 @@ DÉCISIONS ACTÉES :
 
 2) Méthode de travail
 - On construit une brique à la fois, on assemble à la fin (= la dernière idée listée ci-dessus).
-- Ordre choisi : d'abord la prédiction pré-match (stats joueur + mate + adversaires), ensuite l'analyse live (première minute, actualisable) — le live demande un accès en direct au jeu (BakkesMod), nettement plus complexe qu'interroger une API en pré-match.
+- Ordre choisi : d'abord la prédiction pré-match (stats joueurs), ensuite l'analyse live (première minute, actualisable) — le live demande un accès en direct au jeu (BakkesMod), nettement plus complexe qu'interroger une API en pré-match.
 
 3) Position sur le légal
 - Projet strictement personnel, jamais public. Les questions de ToS/API/BakkesMod ne sont pas un frein : décision assumée.
@@ -69,14 +69,14 @@ Briques :
 Flux : Déclencheur -> Source(s) de données (cache consulté en premier) -> Moteur de prédiction -> Interface de sortie
                                                                         -> en parallèle : écriture vers le Stockage (historique)
 
-Pour le tout premier MVP : déclencheur = saisie manuelle des pseudos, source = API tracker uniquement, sortie = simple affichage texte. Le détail du "comment" de chaque brique est volontairement reporté à plus tard.
+Pour le tout premier MVP : déclencheur = saisie manuelle des pseudos, scraping données, sortie = simple affichage texte. Le détail du "comment" de chaque brique est volontairement reporté à plus tard.
 
 PISTES ÉVOQUÉES / QUESTIONS ENCORE OUVERTES (rien n'est validé ici) :
 - Sources de données candidates : API tracker.gg (stats/rank, nécessite une clé + quotas), BallChasing.com (replays parsés avec résultat final, utile pour constituer un historique labellisé), BakkesMod (seul moyen d'avoir l'identité des adversaires + télémétrie en direct).
 - Baseline possible pour le moteur de prédiction : formule Elo (probabilité attendue à partir de l'écart de MMR/rank) comme référence minimale à battre — pas encore confirmée.
-- Playlist(s) à cibler en premier (1v1 / 2v2 / 3v3) — pas encore tranché.
+- Playlist(s) à cibler en premier (1v1)
 
-PROCHAINE ÉTAPE :
+PROCHAINE ÉTAPE :*
 - Détailler le "comment" de chaque brique de l'infrastructure, une à la fois.
 
 ----------------------------------------
@@ -157,11 +157,12 @@ Questions ouvertes ajoutées (pas encore tranchées) :
 Note : comme pour la V1, ne pas modifier ce bloc — la V3 s'ajoutera à la suite.
 
 1. Interface
+Terminal
 
 
 
 2. Systeme récupération données
-
+Playwright et envoi de requests
 
 
 3. cache de traitement
@@ -169,30 +170,3 @@ Note : comme pour la V1, ne pas modifier ce bloc — la V3 s'ajoutera à la suit
 
 4. Moteur de prédiction
 
-----------------------------------------
-NOTES DE CONCEPTION — récap avec Claude (13/09/2026)
-----------------------------------------
-
-RECHERCHE — source de données (brique 2) :
-- Confirmé : tracker.gg n'expose aucune API publique pour Rocket League (le tracker
-  network le dit explicitement, ils renvoient vers Psyonix qui ne délivre pas de clé
-  publique). ballchasing.com a une API (clé gratuite via connexion Steam), mais elle ne
-  donne que des stats de replays déjà uploadées (buts, boost, positionnement...), pas
-  le rank/MMR courant d'un joueur par pseudo. Il n'existe donc pas d'API publique pour
-  récupérer un rank/MMR à la demande.
-- Décision : la brique 2 (V1) devient la saisie manuelle du MMR (visible sur le profil
-  tracker.gg du joueur, ou en jeu via "afficher plus" sur la carte de rank), au lieu de
-  l'API tracker.gg envisagée plus haut. L'automatisation (scraping tracker.gg, ou
-  BakkesMod pour les adversaires en live) reste une piste pour une version ultérieure,
-  pas encore commencée.
-
-LIVRÉ :
-- Brique 1 (Interface, CLI) + brique 4 (Moteur, Elo sur MMR moyen d'équipe) : implémentées
-  ensemble dans main.py. Format 1v1/2v2/3v3 au choix à l'exécution. Sortie = probabilité
-  + explication (écart de MMR, formule utilisée, limites assumées).
-- Brique 3 (Cache) : pas nécessaire pour l'instant, tout est en mémoire le temps du script
-  (pas de fetch externe encore, donc rien à mettre en cache).
-
-PROCHAINE ÉTAPE (pas commencée) :
-- Décider comment automatiser la récupération du MMR par pseudo (scraping tracker.gg
-  probable, à valider), ce qui redonnera un sens à la brique "Cache".
