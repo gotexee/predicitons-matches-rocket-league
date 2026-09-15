@@ -24,6 +24,7 @@ def stats(playwright: Playwright):
             "domain": c["domain"],
             "path": c["path"],
             })
-        context.add_cookies(cookies) # on ajoute cookies dans le contxt
+    context.add_cookies(cookies) # on ajoute cookies dans le contxt
     page = context.new_page()
-    print(page.goto(url))
+    response = page.goto(url)
+    print(response.json())
