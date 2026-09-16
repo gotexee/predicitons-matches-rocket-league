@@ -1,4 +1,5 @@
 import json
+import handle_json
 from playwright.sync_api import sync_playwright, Playwright
 
 
@@ -28,3 +29,4 @@ def stats(playwright: Playwright):
     page = context.new_page()
     response = page.goto(url)
     print(response.json())
+    handle_json.json()
